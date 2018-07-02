@@ -9,7 +9,12 @@ $("#gotick").on("click", function () {
         if (sym === "") {
             $("input").attr("placeholder", "Enter Stock Ticker");
         }else {
+            
+            // set price block
             setPriceBlock();
+			
+			// set company name
+			getMorningStarDetails();
         }
     }else if (sym === "") {
         $("input").attr("placeholder", "Enter Stock Ticker");
@@ -25,17 +30,17 @@ symSel.keyup(function(event) {
 
 // Error Handlers
 function logError(e){
+    $("#ival").html("$-x-");
+    $("#currentyield").html("-x- %");
+    $("#safetyfac").html(" -x- ");
+    $("#buyval").html("$ -x-");
+    $("#iyield").html(" -x- %");
+    $("#bookpct").html(" -- %");
+    $("#roe").html(" -- %");
+    $("#gmar").html(" -- %");
+    $("#debtEq").html(" -- ");
     if (e === undefined) {
         $("#status").html("Cannot find intrinsic value for negative EPS");
-        $("#ival").html("$--");
-        $("#currentyield").html("-- %");
-        $("#safetyfac").html(" -- ");
-        $("#buyval").html("$ --");
-        $("#iyield").html(" -- %");
-        $("#bookpct").html(" -- %");
-        $("#roe").html(" -- %");
-        $("#gmar").html(" -- %");
-        $("#debtEq").html(" -- ");
     }else{
         $("#status").html(e.message);
         console.log(e.message);
@@ -53,11 +58,10 @@ function getMorningStarDetails() {
         //$.getJSON("./json/tempms.json", function (mjson) {
             //company name
             $("#company").find("h2").html(mjson.query.results.row[0].col0.substring(47, 200));
-
-            // set intrinsic value data
+			
+			// set intrinsic value data
             setIntrinsicValue(mjson);
-
-        });
+			});
     }catch (e){
         logError(e);
     }
@@ -143,7 +147,6 @@ function setPriceBlock() {
             var datetimelast = ajson["Meta Data"]["3. Last Refreshed"];
             var price = Math.floor(ajson["Time Series (60min)"][datetimelast]["1. open"]*100)/100;
             $("#price").html(price);
-            getMorningStarDetails();
         });
     } catch (e) {
         logError(e);
