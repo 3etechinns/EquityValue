@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Equity Value</title>
     <!-- Required meta tags -->
@@ -9,110 +10,109 @@
     <!-- CSS -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
-          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
+
 <body>
 
-<!-- Codepen.io -->
-<div class="container">
-    <div class="navbar" id="banner">
-        <div class="col-sm-8 ">
-            <h1> Equity Value </h1>
+    <!-- Codepen.io -->
+    <div class="container">
+        <div class="navbar" id="banner">
+            <div class="col-sm-8 ">
+                <h1> Equity Value </h1>
+            </div>
+            <div class="col-sm-4 input-group">
+                <input type="text" class="form-control" placeholder="Stock Ticker" id="sym">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="gotick">
+                        Go!
+                    </button>
+                </span>
+                <!-- /input-group-btn -->
+            </div>
+            <!-- /input-group -->
         </div>
-        <div class="col-sm-4 input-group">
-            <input type="text" class="form-control" placeholder="Stock Ticker" id="sym">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button" id="gotick">
-                    Go!
-                </button>
-            </span>
-            <!-- /input-group-btn -->
+        <!-- /navbar -->
+
+        <!-- company / priceblock -->
+        <div class="row " id="company">
+            <h2>Company Name</h2>
         </div>
-        <!-- /input-group -->
-    </div>
-    <!-- /navbar -->
+        <div class="row" id="priceblock">
+            <span class="myPrice">$</span>
+            <span class="myPrice" id="price"> -- </span>
+        </div>
 
-    <!-- company / priceblock -->
-    <div class="row " id="company">
-        <h2>Company Name</h2>
-    </div>
-    <div class="row" id="priceblock">
-        <span class="myPrice">$</span>
-        <span class="myPrice" id="price"> -- </span>
-    </div>
+        <!-- Status row -->
+        <div class="row">
+            <h4 id="status"></h4>
+        </div>
 
-    <!-- Status row -->
-    <div class="row">
-        <h4 id="status"></h4>
-    </div>
-
-    <!-- Value row -->
-    <div class="row" id="ivaluerow">
-        <!-- intrinsic value / yield -->
-        <div class="col-sm-3">
-            <div>Intrinsic Value</div>
-            <div>
-                <span class="myPrice" id="ival"> -- </span>
-                @
-                <span id="iyield"> -- </span>
+        <!-- Value row -->
+        <div class="row" id="ivaluerow">
+            <!-- intrinsic value / yield -->
+            <div class="col-sm-3">
+                <div>Intrinsic Value</div>
+                <div>
+                    <span class="myPrice" id="ival"> -- </span>
+                    @
+                    <span id="iyield"> -- </span>
+                </div>
+            </div>
+            <!-- Buy price -->
+            <div class="col-sm-3">
+                <div>Buy At Price</div>
+                <div class="myPrice" id="buyval">$ --</div>
+            </div>
+            <!-- Current Yield -->
+            <div class="col-sm-3">
+                <div>Current Yield</div>
+                <div class="myPrice" id="currentyield"> -- %</div>
+            </div>
+            <!-- Safety Factor -->
+            <div class="col-sm-3">
+                <div>Safety</div>
+                <div class="myPrice" id="safetyfac"> -- %</div>
             </div>
         </div>
-        <!-- Buy price -->
-        <div class="col-sm-3">
-            <div>Buy At Price</div>
-            <div class="myPrice" id="buyval">$ --</div>
-        </div>
-        <!-- Current Yield -->
-        <div class="col-sm-3">
-            <div>Current Yield</div>
-            <div class="myPrice" id="currentyield"> -- %</div>
-        </div>
-        <!-- Safety Factor -->
-        <div class="col-sm-3">
-            <div>Safety</div>
-            <div class="myPrice" id="safetyfac"> -- %</div>
+
+        <!-- Extras -->
+        <div class="row" id="extrasRow">
+            <!-- Return over equity -->
+            <div class="col-sm-3">
+                <div>Return over Equity</div>
+                <div class="myPriceExtra" id="roe"> -- %</div>
+            </div>
+            <!-- Gross Margin -->
+            <div class="col-sm-3">
+                <div>Gross Margin</div>
+                <div class="myPriceExtra" id="gmar"> -- %</div>
+            </div>
+            <!-- Debt-Equity -->
+            <div class="col-sm-3">
+                <div>Debt-Equity</div>
+                <div class="myPriceExtra" id="debtEq"> -- </div>
+            </div>
+            <!-- Safety Factor -->
+            <div class="col-sm-3">
+                <div>Book-Price</div>
+                <div class="myPriceExtra" id="bookpct"> -- %</div>
+            </div>
         </div>
     </div>
 
-    <!-- Extras -->
-    <div class="row" id="extrasRow">
-        <!-- Return over equity -->
-        <div class="col-sm-3">
-            <div>Return over Equity</div>
-            <div class="myPriceExtra" id="roe"> -- %</div>
-        </div>
-        <!-- Gross Margin -->
-        <div class="col-sm-3">
-            <div>Gross Margin</div>
-            <div class="myPriceExtra" id="gmar"> -- %</div>
-        </div>
-        <!-- Debt-Equity -->
-        <div class="col-sm-3">
-            <div>Debt-Equity</div>
-            <div class="myPriceExtra" id="debtEq"> -- </div>
-        </div>
-        <!-- Safety Factor -->
-        <div class="col-sm-3">
-            <div>Book-Price</div>
-            <div class="myPriceExtra" id="bookpct"> -- %</div>
-        </div>
-    </div>
-</div>
 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-        integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-        crossorigin="anonymous"></script>
-		
-<!-- Functional JavaScript -->
-<script src="js/drink.js"></script>
+    <!-- Functional JavaScript -->
+    <script src="js/drink.js"></script>
 
 </body>
+
 </html>

@@ -4,32 +4,32 @@ var symSel = $("#sym");
 
 // Go button click
 $("#gotick").on("click", function () {
-    if (sym !== symSel.val()){   // check if new stock ticker is selected
+    if (sym !== symSel.val()) { // check if new stock ticker is selected
         sym = symSel.val();
         if (sym === "") {
             $("input").attr("placeholder", "Enter Stock Ticker");
-        }else {
-            
+        } else {
+
             // set price block
             setPriceBlock();
-			
-			// set company name
-			getMorningStarDetails();
+
+            // set company name
+            getMorningStarDetails();
         }
-    }else if (sym === "") {
+    } else if (sym === "") {
         $("input").attr("placeholder", "Enter Stock Ticker");
     }
 });
 
 // Search enter key --> simulate button press
-symSel.keyup(function(event) {
+symSel.keyup(function (event) {
     if (event.keyCode === 13) {
         $("#gotick").click();
     }
 });
 
 // Error Handlers
-function logError(e){
+function logError(e) {
     $("#ival").html("$-x-");
     $("#currentyield").html("-x- %");
     $("#safetyfac").html(" -x- ");
@@ -41,7 +41,7 @@ function logError(e){
     $("#debtEq").html(" -- ");
     if (e === undefined) {
         $("#status").html("Cannot find intrinsic value for negative EPS");
-    }else{
+    } else {
         $("#status").html(e.message);
         console.log(e.message);
     }
@@ -55,21 +55,21 @@ function getMorningStarDetails() {
         "'&format=json&callback=";
     try {
         $.getJSON(msurl, function (mjson) {
-        //$.getJSON("./json/tempms.json", function (mjson) {
+            //$.getJSON("./json/tempms.json", function (mjson) {
             //company name
             $("#company").find("h2").html(mjson.query.results.row[0].col0.substring(47, 200));
-			
-			// set intrinsic value data
+
+            // set intrinsic value data
             setIntrinsicValue(mjson);
-			});
-    }catch (e){
+        });
+    } catch (e) {
         logError(e);
     }
 }
 
-function setIntrinsicValue(mjson){
+function setIntrinsicValue(mjson) {
     var eps = parseFloat(mjson.query.results.row[8].col11);
-    if (eps > 0){
+    if (eps > 0) {
         $("#status").html("");
         var bookval = parseFloat(mjson.query.results.row[12].col11);
         var b10 = parseFloat(mjson.query.results.row[12].col10);
@@ -79,7 +79,7 @@ function setIntrinsicValue(mjson){
         }
         var bi = parseFloat(mjson.query.results.row[12]["col" + i]);
         if (b10 - bi > 0) {
-            var growth = 69 * (Math.pow(b10 / bi, 1 / (9 - i)) - 1);     //conservative growth 69% --> e^1
+            var growth = 69 * (Math.pow(b10 / bi, 1 / (9 - i)) - 1); //conservative growth 69% --> e^1
             var ival = Math.floor(eps * (growth + 7) * 440 / 3.67) / 100;
             var price = $("#price").html();
 
@@ -88,7 +88,7 @@ function setIntrinsicValue(mjson){
             $("#iyield").html(Math.floor(growth * 100) / 100 + "%");
 
             // set buy price
-            var fos = 1.25;      // 75% factor of safety --> trust in calculation
+            var fos = 1.25; // 75% factor of safety --> trust in calculation
             var buyval = Math.floor(ival * 100 / fos) / 100;
             var buyvalSel = $("#buyval");
             buyvalSel.html("$" + buyval);
@@ -104,36 +104,36 @@ function setIntrinsicValue(mjson){
             // set safety-risk
             //debt-eq
             var debtEq = mjson.query.results.row[99].col10;
-            if (debtEq === null){
+            if (debtEq === null) {
                 debtEq = 1;
             }
             $("#debtEq").html(debtEq);
-            debtEq = 0.9/debtEq;  // 0.9 --> 90% max debt ratio
+            debtEq = 0.9 / debtEq; // 0.9 --> 90% max debt ratio
 
             // ROE
             var roe = mjson.query.results.row[37].col10;
-            if (roe === null){
-                roe = 100*eps/bookval;
+            if (roe === null) {
+                roe = 100 * eps / bookval;
             }
-            $("#roe").html(Math.floor(roe*100)/100 + " %");
-            roe = roe/20;  // 0.2 --> 20% min roe
+            $("#roe").html(Math.floor(roe * 100) / 100 + " %");
+            roe = roe / 20; // 0.2 --> 20% min roe
 
             // Gross Margin
             var gmar = mjson.query.results.row[4].col10;
             $("#gmar").html(gmar + " %");
-            gmar = gmar/60; // 60 --> 60% min gross margin
+            gmar = gmar / 60; // 60 --> 60% min gross margin
 
             //Book Price
-            $("#bookpct").html(Math.floor(10000*bookval/price)/100 + " %");
+            $("#bookpct").html(Math.floor(10000 * bookval / price) / 100 + " %");
 
             // Safety --> 1/Risk
-            var bookpct = Math.floor(bookval*debtEq*roe*10000/price)/100;
+            var bookpct = Math.floor(bookval * debtEq * roe * 10000 / price) / 100;
             $("#safetyfac").html(bookpct + " %");
 
         } else {
             logError();
         }
-    }else{
+    } else {
         logError();
     }
 }
@@ -143,9 +143,9 @@ function setPriceBlock() {
         "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + sym + "&interval=60min&outputsize=compact&apikey=RYJDPZ0S2IX0HAYM";
     try {
         $.getJSON(alphaurl, function (ajson) {
-        //$.getJSON("./json/tempalpha.json", function (ajson) {
+            //$.getJSON("./json/tempalpha.json", function (ajson) {
             var datetimelast = ajson["Meta Data"]["3. Last Refreshed"];
-            var price = Math.floor(ajson["Time Series (60min)"][datetimelast]["1. open"]*100)/100;
+            var price = Math.floor(ajson["Time Series (60min)"][datetimelast]["1. open"] * 100) / 100;
             $("#price").html(price);
         });
     } catch (e) {
