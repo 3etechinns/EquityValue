@@ -1,0 +1,58 @@
+.temp {
+    background-color: #717073;
+}
+
+#banner {
+    background-color: #b3b3b3;
+}
+
+#banner .input-group {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#company {
+    margin: 30px 10px 10px 10px;
+    font-family: "Calibri Light", serif;
+    font-variant: small-caps;
+    font-style: italic;
+}
+
+#priceblock {
+    margin-left: 30px;
+    margin-top: -10px;
+}
+
+.myPrice {
+    font-family: "Calibri", serif;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+#ivaluerow {
+    text-align: center;
+    font-family: "Calibri Light", serif;
+    font-variant: small-caps;
+    font-size: 1.4em;
+    margin-top: 40px;
+}
+
+#status {
+    font-family: "Calibri Light", serif;
+    font-size: 1.2em;
+    margin-top: 20px;
+    margin-left: 30px;
+    font-variant: small-caps;
+    font-weight: bold;
+    color: #c14756;
+    font-style: italic;
+}
+
+#extrasRow {
+    text-align: center;
+    font-family: "Calibri Light", serif;
+    font-variant: small-caps;
+    font-size: 1em;
+    margin-top: 30px;
+    color: #a1a1a1;
+}
